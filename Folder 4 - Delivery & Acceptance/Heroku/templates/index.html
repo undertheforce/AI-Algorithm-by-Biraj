@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Loan Prediction Model</title>
+</head>
+
+<body>
+<div class="loan">
+<h1>Loan Predictior</h1>
+<h6>For Married field provide 0 for married and 1 for single</h6>
+<h6>For Dependents field provide 0, 1, 2, 3+ any which is appled for you</h6>
+<h6></h6>
+
+<form action="/predict"method="post">
+
+<input type="text" name="Gender" placeholder="Gender" required="required" />
+<input type="text" name="Married" placeholder="Married" required="required" />
+<input type="text" name="Dependents" placeholder="Dependents" required="required" />
+<input type="text" name="Education" placeholder="Education" required="required" />
+<input type="text" name="Self_Employed" placeholder="Self_Employed" required="required" />
+<input type="text" name="ApplicantIncome" placeholder="ApplicantIncome" required="required" />
+<input type="text" name="CoapplicantIncome" placeholder="CoapplicantIncome" required="required" />
+<input type="text" name="LoanAmount" placeholder="LoanAmount" required="required" />
+<input type="text" name="Loan_Amount_Term" placeholder="Loan_Amount_Term" required="required" />
+<input type="text" name="Credit_History" placeholder="Credit_History" required="required" />
+<input type="text" name="Property_Area" placeholder="Property_Area" required="required" />
+<button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+</form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+</body>
+</html>
