@@ -7,14 +7,14 @@
 
 # Dataset Source: https://www.kaggle.com/altruistdelhite04/loan-prediction-problem-dataset
 
-# In[5]:
+# In[1]:
 
 
 from IPython.display import Image
 Image("data/AboutDataset.JPG")
 
 
-# In[6]:
+# In[2]:
 
 
 import pandas as pd
@@ -24,7 +24,7 @@ import seaborn as sns
 get_ipython().run_line_magic('matplotlib', 'inline')
 
 
-# In[7]:
+# In[3]:
 
 
 ds_loan = pd.read_csv('data/train.csv')
@@ -33,19 +33,19 @@ ds_loan_test = pd.read_csv('data/test.csv')
 
 # # EDA on Train Dataset
 
-# In[8]:
+# In[4]:
 
 
 ds_loan
 
 
-# In[9]:
+# In[5]:
 
 
 ds_loan.describe()
 
 
-# In[10]:
+# In[6]:
 
 
 ds_loan.info()
@@ -53,7 +53,7 @@ ds_loan.info()
 
 # Check null values and clean train dataset
 
-# In[11]:
+# In[7]:
 
 
 ds_loan.isnull().sum()
@@ -63,13 +63,13 @@ ds_loan.isnull().sum()
 # 
 # For LoanAmount attribute I'll use median function to resolve null value problem
 
-# In[12]:
+# In[8]:
 
 
 ds_loan['LoanAmount'].value_counts()
 
 
-# In[13]:
+# In[9]:
 
 
 ds_loan['Gender'].fillna(ds_loan['Gender'].mode()[0], inplace = True)
@@ -83,13 +83,13 @@ ds_loan['Credit_History'].fillna(ds_loan['Credit_History'].mode()[0], inplace = 
 
 # Training dataset after resolving missing values
 
-# In[14]:
+# In[10]:
 
 
 ds_loan
 
 
-# In[15]:
+# In[11]:
 
 
 ds_loan.isnull().sum()
@@ -97,7 +97,7 @@ ds_loan.isnull().sum()
 
 # Training dataset dont have any duplicated values in it
 
-# In[16]:
+# In[12]:
 
 
 ds_loan.duplicated().sum()
@@ -107,19 +107,19 @@ ds_loan.duplicated().sum()
 
 # # EDA on Test Dataset
 
-# In[17]:
+# In[13]:
 
 
 ds_loan_test
 
 
-# In[18]:
+# In[14]:
 
 
 ds_loan_test.describe()
 
 
-# In[19]:
+# In[15]:
 
 
 ds_loan_test.info()
@@ -127,19 +127,19 @@ ds_loan_test.info()
 
 # Check null values and clean train dataset test dataset
 
-# In[20]:
+# In[16]:
 
 
 ds_loan_test.isnull().sum()
 
 
-# In[21]:
+# In[17]:
 
 
 ds_loan_test['LoanAmount'].value_counts()
 
 
-# In[22]:
+# In[18]:
 
 
 ds_loan_test['Gender'].fillna(ds_loan_test['Gender'].mode()[0], inplace = True)
@@ -150,25 +150,25 @@ ds_loan_test['Loan_Amount_Term'].fillna(ds_loan_test['Loan_Amount_Term'].mode()[
 ds_loan_test['Credit_History'].fillna(ds_loan_test['Credit_History'].mode()[0], inplace = True)
 
 
-# In[23]:
+# In[19]:
 
 
 ds_loan_test
 
 
-# In[24]:
+# In[20]:
 
 
 ds_loan_test.isnull().sum()
 
 
-# In[25]:
+# In[21]:
 
 
 ds_loan_test.duplicated().sum()
 
 
-# In[26]:
+# In[22]:
 
 
 ds_loan.drop('Loan_ID',axis=1,inplace=True)
@@ -181,7 +181,7 @@ print(f"training shape (row, col): {ds_loan.shape}\n\ntesting shape (row, col): 
 
 # Creating collumns of all numerical and categorical columns, and dataset as well
 
-# In[27]:
+# In[23]:
 
 
 #list of all the numeric columns
@@ -197,7 +197,7 @@ ds_loan_cat = ds_loan[cat]
 
 # Comparing Loan status output, where loan acceptance racio is higher then rejection
 
-# In[28]:
+# In[24]:
 
 
 sns.countplot(ds_loan['Loan_Status'])
@@ -211,7 +211,7 @@ sns.countplot(ds_loan['Loan_Status'])
 # - They all applied for long term loan payment
 # - Most applicate have good credit history
 
-# In[29]:
+# In[25]:
 
 
 for a in ds_loan_num:
@@ -228,7 +228,7 @@ for a in ds_loan_num:
 # - Loan company trust more on Gradate candidate and not self-employed(they want steady salary recored)
 # - There is not much difference with where candidate live, but suburban have got good acceptance rate.
 
-# In[30]:
+# In[26]:
 
 
 for i in cat[:-1]: 
@@ -240,7 +240,7 @@ for i in cat[:-1]:
 
 # Converting Object data into numerical data to better understand data relations.
 
-# In[31]:
+# In[27]:
 
 
 from sklearn.preprocessing import LabelEncoder
@@ -256,7 +256,7 @@ ds_loan
 
 # Correlation of all columns after changing categorical data into numerical
 
-# In[32]:
+# In[28]:
 
 
 corr = ds_loan.corr()
@@ -264,21 +264,21 @@ plt.figure(figsize=(15, 12))
 sns.heatmap(corr, annot=True, cmap='cubehelix_r');
 
 
-# In[33]:
+# In[29]:
 
 
 X = ds_loan.drop('Loan_Status',1)
 y = ds_loan['Loan_Status']
 
 
-# In[34]:
+# In[30]:
 
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.25)
 
 
-# In[35]:
+# In[31]:
 
 
 print(x_train.shape)
@@ -291,7 +291,7 @@ print(y_test.shape)
 
 # I'll apply logistic regression, beacuse it gives better results with numeric and binary data.
 
-# In[36]:
+# In[32]:
 
 
 from sklearn import tree
@@ -314,7 +314,7 @@ DTC_Classifier = tree.DecisionTreeClassifier(criterion='entropy', random_state=0
 DTC_Classifier.fit(x_train, y_train)
 
 
-# In[37]:
+# In[33]:
 
 
 models = []
@@ -343,13 +343,13 @@ for i, v in models:
 
 # From above result we can see that we have used 3 algotithms which are good for handling numerical and boolean values. Here Decision Tree gave overfitting result and Logistic Regression's output is better than K-Neighbours classifier algorithm. So I will try to improve Logestic Regression by using feature.
 
-# In[38]:
+# In[34]:
 
 
 LGR_Classifier.coef_
 
 
-# In[39]:
+# In[35]:
 
 
 feature_dict = dict(zip(ds_loan.columns, list(LGR_Classifier.coef_[0])))
@@ -357,7 +357,7 @@ features = pd.DataFrame(feature_dict, index=[0])
 features.plot.bar(figsize=(10, 6));
 
 
-# In[40]:
+# In[36]:
 
 
 from sklearn.ensemble import ExtraTreesClassifier
@@ -372,20 +372,20 @@ feat_importances.nlargest(10).plot(kind='barh')
 plt.show()
 
 
-# In[41]:
+# In[37]:
 
 
 X1 = X[['Credit_History', 'ApplicantIncome', 'CoapplicantIncome', 'Married', 'Property_Area', 'Dependents', 'LoanAmount']]
 
 
-# In[42]:
+# In[38]:
 
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(X1, y, test_size = 0.25)
 
 
-# In[43]:
+# In[39]:
 
 
 # Train KNeighborsClassifier Model
@@ -397,7 +397,7 @@ LGR_Classifier = LogisticRegression(n_jobs=-1, random_state=0)
 LGR_Classifier.fit(x_train, y_train);
 
 
-# In[44]:
+# In[40]:
 
 
 models = []
@@ -427,21 +427,21 @@ for i, v in models:
 
 # Final Approach
 
-# In[45]:
+# In[41]:
 
 
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.25)
 
 
-# In[46]:
+# In[42]:
 
 
 LGR_Classifier = LogisticRegression(n_jobs=-1, random_state=0)
 LGR_Classifier.fit(x_train, y_train);
 
 
-# In[47]:
+# In[43]:
 
 
 models = []
@@ -466,7 +466,7 @@ for i, v in models:
     print()
 
 
-# In[48]:
+# In[44]:
 
 
 for i, v in models:
@@ -484,7 +484,7 @@ for i, v in models:
     print() 
 
 
-# In[49]:
+# In[45]:
 
 
 from sklearn.preprocessing import LabelEncoder
@@ -496,26 +496,26 @@ for i in c:
     ds_loan_test[i] = LE.fit_transform(ds_loan_test[i])
 
 
-# In[50]:
+# In[46]:
 
 
 pred_log = LGR_Classifier.predict(ds_loan_test)
 
 
-# In[51]:
+# In[47]:
 
 
 pred_df = pd.DataFrame(pred_log, columns = ['class']) 
 test_output = pd.concat([ds_loan_test, pred_df],axis=1)
 
 
-# In[52]:
+# In[48]:
 
 
 test_output
 
 
-# In[53]:
+# In[49]:
 
 
 sns.countplot(data = test_output, x = 'class')
@@ -523,20 +523,20 @@ sns.countplot(data = test_output, x = 'class')
 
 # # Model Deployment steps
 
-# In[54]:
+# In[50]:
 
 
 import pickle
 
 
-# In[55]:
+# In[51]:
 
 
 filename = 'model.pkl'
 pickle.dump(LGR_Classifier, open('model.pkl', 'wb'))
 
 
-# In[56]:
+# In[52]:
 
 
 model = pickle.load(open('model.pkl', 'rb'))
